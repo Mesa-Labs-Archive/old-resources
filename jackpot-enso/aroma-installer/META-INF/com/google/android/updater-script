@@ -1,0 +1,445 @@
+# Coded by BlackMesa @ensō.
+# YOU'RE NOT AUTHORIZED TO TAKE/MODIFY THIS FILE WITHOUT MY PERMISSION.
+# NO ZONIK/WHO ELSE YOU ARE, RENAMING THIS WITH YOUR NICKNAME/ROM NAME DOESN'T WORKS AS WELL. ;)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+##assert(is_substring("A530F", getprop("ro.boot.bootloader")) || is_substring("A530W", getprop("ro.boot.bootloader")) ||  is_substring("A530N", getprop("ro.boot.bootloader")) || is_substring("A730F", getprop("ro.boot.bootloader")) ||
+##  abort("The following ROM isn't compatible with your device. Aborting..."););
+#
+set_progress(0.0);
+#
+ui_print("@========================================");
+ui_print("ensō v1 Xtreme PowerPack ROM");
+ui_print("Coded by BlackMesa123 @DevKings Team");
+ui_print(" ");
+#
+if is_substring("A530F", getprop("ro.boot.bootloader")) then
+	ui_print("SM-A530F/jackpotlte detected.");
+	ui_print(" ");
+endif;
+if is_substring("A530W", getprop("ro.boot.bootloader")) then
+	ui_print("SM-A530W/jackpotltecan detected.");
+	ui_print(" ");
+endif;
+if is_substring("A530N", getprop("ro.boot.bootloader")) then
+	ui_print("SM-A530N/jackpotlteks detected.");
+	ui_print(" ");
+endif;
+if is_substring("A730F", getprop("ro.boot.bootloader")) then
+	ui_print("SM-A730F/jackpot2lte detected.");
+	ui_print(" ");
+endif;
+#
+ui_print("Install may take a while. Please wait...");
+ui_print("@========================================");
+#
+ui_print("-Mounting Partitions...");
+ifelse(is_mounted("/system"), unmount("/system"));
+ifelse(is_mounted("/data"), unmount("/data"));
+ifelse(is_mounted("/cache"), unmount("/cache"));
+##mount("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/SYSTEM", "/system");
+##mount("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/USERDATA", "/data");
+##mount("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/CACHE", "/cache");
+set_progress(0.100000);
+#
+if file_getprop("/tmp/aroma/wipe.prop", "selected.0") == "1" then
+	ui_print("-Cleaning System & Cache...");
+##	if is_mounted("/system") then
+##		delete_recursive("/system");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/SYSTEM", "0", "/system");
+##	endif;
+##	if is_mounted("/cache") then
+##		delete_recursive("/cache");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/CACHE", "0", "/cache");
+##	endif;
+##	if is_mounted("/data") then
+##		delete_recursive("/data/dalvik-cache");
+##	else
+##		ui_print("!Failed to mount /data! Install can't proceed.");
+##		abort("@========================================");
+##	endif;
+endif;
+if file_getprop("/tmp/aroma/wipe.prop", "selected.0") == "2" then
+	ui_print("-Wiping System, Cache and Data...");
+##	if is_mounted("/system") then
+##		delete_recursive("/system");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/SYSTEM", "0", "/system");
+##	endif;
+##	if is_mounted("/cache") then
+##		delete_recursive("/cache");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/CACHE", "0", "/cache");
+##	endif;
+##	if is_mounted("/data") then
+##		package_extract_file("enso/scripts/wipe.sh", "/tmp/wipe.sh");
+##		set_perm(0, 0, 0755, "/tmp/wipe.sh");
+##		run_program("/tmp/wipe.sh");
+##		delete("/tmp/wipe.sh");
+##	else
+##		ui_print("!Failed to mount /data! Install can't proceed.");
+##		abort("@========================================");
+##	endif;
+endif;
+if file_getprop("/tmp/aroma/wipe.prop", "selected.0") == "3" then
+	ui_print("-Formatting System, Cache and Userdata...");
+##	if is_mounted("/system") then
+##		delete_recursive("/system");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/SYSTEM", "0", "/system");
+##	endif;
+##	if is_mounted("/cache") then
+##		delete_recursive("/cache");
+##	else
+##		format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/CACHE", "0", "/cache");
+##	endif;
+##	format("ext4", "EMMC", "/dev/block/platform/13500000.dwmmc0/by-name/USERDATA", "0", "/data");
+endif;
+set_progress(0.15);
+#
+ui_print("-Extracting System...");
+##package_extract_dir("enso/system", "/system");
+if file_getprop("/tmp/aroma/ui.prop", "selected.0") == "1" then
+	ui_print("-Applying Stock UX...");
+##	package_extract_dir("enso/ui/stock", "/system");
+endif;
+if file_getprop("/tmp/aroma/ui.prop", "selected.0") == "2" then
+	ui_print("-Applying ensō UX...");
+##	package_extract_dir("enso/ui/mod", "/system");
+endif;
+set_progress(0.30);
+#
+ui_print("-Extracting kernel & variant files...");
+if is_substring("A530F", getprop("ro.boot.bootloader")) then
+	sleep(0);
+endif;
+if is_substring("A530W", getprop("ro.boot.bootloader")) then
+	sleep(0);
+endif;
+if is_substring("A530N", getprop("ro.boot.bootloader")) then
+	sleep(0);
+endif;
+if is_substring("A730F", getprop("ro.boot.bootloader")) then
+	sleep(0);
+endif;
+set_progress(0.35);
+#
+if file_getprop("/tmp/aroma/dpi.prop","selected.0") == "1" then
+    ui_print("-Setting Condensed Dpi...");
+endif;
+if file_getprop("/tmp/aroma/dpi.prop", "selected.0") == "2" then
+    ui_print("-Setting Large Dpi...");
+endif;
+set_progress(0.40);
+#
+ui_print("-Setting Symlinks...");
+set_progress(0.45);
+#
+ui_print("-Setting Permissions...");
+set_progress(0.50);
+#
+ui_print("@========================================");
+ui_print("-Installing Magisk & Busybox...");
+set_progress(0.55);
+#
+ui_print("@========================================");
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.1") == "1" then
+    ui_print("-Installing ANT Plus feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.2") == "1" then
+    ui_print("-Installing Samsung AOD feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.3") == "1" then
+    ui_print("-Installing Bixby Voice feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.4") == "1" then
+    ui_print("-Installing Samsung BLF feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.5") == "1" then
+    ui_print("-Installing Car Connect feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.6") == "1" then
+    ui_print("-Installing DayDreams feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.7") == "1" then
+	if file_getprop("/tmp/aroma/feat1.prop", "item.0.30") == "1" then
+		ui_print("-Installing Dolby Atmos feature...");
+	endif;
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.8") == "1" then
+    ui_print("-Installing Dual Messenger feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.9") == "1" then
+    ui_print("-Installing Samsung UPSM feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.10") == "1" then
+    ui_print("-Installing FlipFont feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.11") == "1" then
+    ui_print("-Installing GoodLock 2018 feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.12") == "1" then
+    ui_print("-Installing Print feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.13") == "1" then
+    ui_print("-Installing Private Mode feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.14") == "1" then
+    ui_print("-Installing S Pen feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.15") == "1" then
+    ui_print("-Installing Samsung Cloud feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.16") == "1" then
+    ui_print("-Installing Samsung Edge feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.17") == "1" then
+    ui_print("-Installing Floating Messages feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.18") == "1" then
+    ui_print("-Installing Samsung Sapa feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.19") == "1" then
+    ui_print("-Installing Profile Sharing feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.20") == "1" then
+    ui_print("-Installing S Bike feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.21") == "1" then
+    ui_print("-Installing Smart Call feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.22") == "1" then
+    ui_print("-Installing SmartThings feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.23") == "1" then
+    ui_print("-Installing Samsung Themes feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.24") == "1" then
+    ui_print("-Installing Samsung VR feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.25") == "1" then
+    ui_print("-Installing Samsung Yuva feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.26") == "1" then
+    ui_print("-Installing Smart Stay feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.27") == "1" then
+    ui_print("-Installing Smart Switch feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.28") == "1" then
+    ui_print("-Installing Smart View feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.29") == "1" then
+    ui_print("-Installing Sound Detector feature...");
+endif;
+if file_getprop("/tmp/aroma/feat1.prop", "item.0.30") == "1" then
+    ui_print("-Installing SoundAlive feature...");
+endif;
+set_progress(0.60);
+#
+if file_getprop("/tmp/aroma/feat2.prop","selected.1") == "2" then
+    ui_print("-Installing Stock Smart Manager...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.1") == "3" then
+    ui_print("-Installing China Smart Manager...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.2") == "1" then
+    ui_print("-Installing Samsung Camera v7...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.2") == "2" then
+    ui_print("-Installing Samsung Social Camera v7...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.2") == "3" then
+    ui_print("-Installing Samsung Camera v7...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.2") == "4" then
+    ui_print("-Installing Samsung Social Camera v8...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.3") == "2" then
+    ui_print("-Installing Samsung Stickers...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.3") == "3" then
+    ui_print("-Installing Samsung Stickers...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.3") == "4" then
+    ui_print("-Installing Samsung Stickers+AR Emoji...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.4") == "2" then
+    ui_print("-Installing Bixby Vision v1...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.4") == "3" then
+    ui_print("-Installing Bixby Vision v2...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.5") == "2" then
+    ui_print("-Installing Stock Samsung Music...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.5") == "3" then
+    ui_print("-Installing China Samsung Music...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.6") == "2" then
+    ui_print("-Installing Stock Samsung Video...");
+endif;
+if file_getprop("/tmp/aroma/feat2.prop","selected.6") == "3" then
+    ui_print("-Installing China Samsung Video...");
+endif;
+set_progress(0.65);
+#
+ui_print("@========================================");
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.1") == "1" then
+    ui_print("-Installing Bixby Home app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.2") == "1" then
+    ui_print("-Installing Galaxy Apps app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.3") == "1" then
+    ui_print("-Installing Live Drawing app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.4") == "1" then
+    ui_print("-Installing Samsung Browser app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.5") == "1" then
+    ui_print("-Installing Samsung Calculator app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.6") == "1" then
+    ui_print("-Installing Samsung Calendar app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.7") == "1" then
+    ui_print("-Installing Samsung Clock app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.8") == "1" then
+    ui_print("-Installing Samsung Dictionary app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.9") == "1" then
+    ui_print("-Installing Samsung Email app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.10") == "1" then
+    ui_print("-Installing Samsung Finder app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.11") == "1" then
+    ui_print("-Installing Samsung Gallery app...");
+	if file_getprop("/tmp/aroma/sxtra.prop", "item.0.12") == "1" then
+		ui_print("-Installing Gallery Extra features...");
+	endif;
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.13") == "1" then
+    ui_print("-Installing Game Launcher app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.14") == "1" then
+    ui_print("-Installing Game Live app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.15") == "1" then
+    ui_print("-Installing Game Tools app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.16") == "1" then
+    ui_print("-Installing Game Tuner app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.17") == "1" then
+    ui_print("-Installing Samsung Health app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.18") == "1" then
+    ui_print("-Installing Link Sharing app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.19") == "1" then
+    ui_print("-Installing Samsung Magnifier app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.20") == "1" then
+    ui_print("-Installing Samsung My Files app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.21") == "1" then
+    ui_print("-Installing Samsung Notes app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.22") == "1" then
+    ui_print("-Installing Smart Reminder app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.23") == "1" then
+    ui_print("-Installing Sound Assistant app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.24") == "1" then
+    ui_print("-Installing Samsung Wearable app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.25") == "1" then
+    ui_print("-Installing Samsung Weather app...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.26") == "1" then
+    ui_print("-Installing Phone Test apps...");
+endif;
+if file_getprop("/tmp/aroma/sxtra.prop", "item.0.27") == "1" then
+    ui_print("-Installing Write on PDF app...");
+endif;
+set_progress(0.70);
+#
+ui_print("@========================================");
+if file_getprop("/tmp/aroma/apps.prop", "item.0.1") == "1" then
+    ui_print("-Installing AdAway app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.2") == "1" then
+    ui_print("-Installing BetterBatteryStats app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.3") == "1" then
+    ui_print("-Installing DNS66 app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.4") == "1" then
+    ui_print("-Installing GBWhatsApp app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.5") == "1" then
+    ui_print("-Installing Google Camera app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.6") == "1" then
+    ui_print("-Installing Kernel Toolkit app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.7") == "1" then
+    ui_print("-Installing MiXplorer app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.8") == "1" then
+    ui_print("-Installing Plus Messenger app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.9") == "1" then
+    ui_print("-Installing Titanium Backup app...");
+endif;
+if file_getprop("/tmp/aroma/apps.prop", "item.0.10") == "1" then
+    ui_print("-Installing YouTube Vanced app...");
+endif;
+set_progress(0.80);
+#
+ui_print("@========================================");
+if file_getprop("/tmp/aroma/tweaks.prop","selected.1") == "1" then
+    ui_print("-Applying Stock Boot Animation...");
+endif;
+if file_getprop("/tmp/aroma/tweaks.prop","selected.1") == "2" then
+    ui_print("-Applying ensō Boot Animation...");
+endif;
+if file_getprop("/tmp/aroma/tweaks.prop","selected.2") == "2" then
+    ui_print("-Enabling Call Recording feature...");
+endif;
+if file_getprop("/tmp/aroma/tweaks.prop","selected.3") == "1" then
+    ui_print("-Installing Stock Emoji pack...");
+endif;
+if file_getprop("/tmp/aroma/tweaks.prop","selected.3") == "2" then
+    ui_print("-Installing iOS Emoji pack...");
+endif;
+if file_getprop("/tmp/aroma/tweaks.prop","selected.4") == "2" then
+    ui_print("-Installing iOS Notifications Sounds...");
+endif;
+set_progress(0.90);
+#
+ui_print("@========================================");
+ui_print("-Unmounting Partitions...");
+ifelse(is_mounted("/system"), unmount("/system"));
+ifelse(is_mounted("/data"), unmount("/data"));
+ifelse(is_mounted("/cache"), unmount("/cache"));
+ui_print("@========================================");
+set_progress(1.000000);
+sleep(1);

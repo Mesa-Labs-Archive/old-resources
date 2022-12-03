@@ -1,0 +1,266 @@
+﻿# Coded by BlackMesa @ensō.
+# YOU'RE NOT AUTHORIZED TO TAKE/MODIFY THIS FILE WITHOUT MY PERMISSION.
+# NO ZONIK/WHO ELSE YOU ARE, RENAMING THIS WITH YOUR NICKNAME/ROM NAME DOESN'T WORKS AS WELL. ;)
+#
+# LICENSE:
+#
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+ini_set("force_colorspace","rgba");
+#
+ini_set("rom_name",			 "ensō Xtreme PowerPack ROM");
+ini_set("rom_version",		  "v1");
+ini_set("rom_author",		   "BlackMesa123");
+ini_set("rom_device",		   "Galaxy A8/A8+ 2018");
+ini_set("rom_date",			 "?");
+#
+splash(
+	2000,
+	"ensosplash"
+);
+#
+fontresload( "0", "ttf/Biko_Regular.ttf;", "12" );
+fontresload( "1", "ttf/Biko_Regular.ttf;", "14" );
+#
+theme("enso");
+#
+viewbox(
+	"ensō",
+	"Welcome to <b><#selectbg_g>ensō Setup Wizard</#>!</b> "+
+	"This installer will help you to set up your device with this ROM.\n\n"+
+	"<b>Firmware Informations:</b>\n"+
+	"ROM Name		: <b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+	"ROM Version	: <b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+	"Firmware Build   : <b><#selectbg_g>ffs still no ROM</#></b>\n"+
+	"Maintainer		: <b><#selectbg_g>"+ini_get("rom_author")+"</#></b>\n"+
+	"Devs Team		: <b><#selectbg_g>DevKings Team</#></b>\n"+
+	"Device			: <b><#selectbg_g>"+ini_get("rom_device")+"</#></b>\n\n\n\n"+
+	"Press <b>Next</b> to continue.",
+	"@enso"
+);
+#
+agreebox(
+	"ensō",
+	"Here are the Terms and Conditions for using this Custom Firmware, please read and accept them.",
+	"@tac",
+	resread("oinfo.txt"),
+	"I Agree to Install the ROM.",
+	"You have to agree the terms and conditions to proceed!"
+);
+#
+selectbox(
+	"ensō",
+	"Please choose the wipe method you want to execute when installing the ROM.",
+	"@wipe",
+	"wipe.prop",
+  
+	"No wipe",	"This will wipe just system, cache and ART cache. Useful in case of bootloops or if you want to add/remove some ROM's features.",	0,
+	"Factory Reset",	"This will wipe system, data, cache and ART cache. Use this if you're coming from another ROM and wanna keep your files.",	1,
+	"Total Factory Reset",	"This will wipe system, data, cache, ART cache and FORMAT userdata. Use this if you wanna totally clean your device.",	0
+);
+#
+selectbox(
+	"ensō",
+	"Please choose the UX Experience you want to meet in ensō.",
+	"@ui",
+	"ui.prop",
+
+	"Stock UX",	"By choosing this, no additional UX Customization features than Stock one will be installed.",	0,
+	"ensō UX",	"By choosing this, ensō extra UX Customizations will be added to the ROM.",	1
+);
+#
+selectbox(
+	"ensō",
+	"Please choose the Display Density you want to get at first boot.",
+	"@dpi",
+	"dpi.prop",
+
+	"Condensed UI",	"Choosing this will set a Small DPI, default one on big phones like A8+, on first boot.",	1,
+	"Large UI",	"Choosing this will set a Big DPI, default one on small phones like A8, on first boot.",	0
+);
+#
+checkbox(
+	"ensō",
+	"Please select the features you want to have in the ROM.",
+	"@feat",
+	"feat1.prop",
+
+	"ANT Plus",	"The Bluetooth LE solution for Android devices from ANT.",	0,
+	"Bixby Voice",	"The brand new Samsung's voice assistant.",	1,
+	"DayDreams",	"Google's screensaver feature.",	0,
+	"Dolby Atmos",	"Audio FX feature powered by Dolby. Needs SoundAlive to work.",	1,
+	"FlipFont Fonts",	"Customize your UX's main font with downloadable custom ones.",	0,
+	"GoodLock 2018 Suite",	"Give a fresh air to your UX with this Samsung's suite.",	0,
+	"Private Mode",	"Store your personal data of your phone in a separate environment.",	1,
+	"S Pen",	"Adds Air Command and its related touch features. Pen-only features not supported.",	1,
+	"Samsung Edge Features",	"Samsung Edge devices features.",	1,
+	"Samsung Floating Messages",	"Reply to your messages notifications way faster.",	1,
+	"Samsung Professional Audio SDK",	"SDK needed from Samsung apps like Soundcamp.",	1,
+	"Samsung Profile Sharing",	"Samsung Contacts app Social features.",	1,
+	"Samsung S Bike",	"A better way to use your phone while you're on a two wheels.",	1,
+	"Samsung Smart Call",	"Samsung's Spam and Scam calls identifier feature.",	1,
+	"Samsung SmartThings/Nearby devices",	"Easier way to control paired/near devices with your phone.",	1,
+	"Samsung Themes",	"Customize your phone's UX colors with Samsung's Theme Engine.",	1,
+	"Samsung VR",	"Virtual Reality related services.",	0,
+	"Samsung Yuva Suite",	"Contains AppLock, Wifi Secure, PowerPlanning, Memory Saver and more.",	1,
+	"Sound Detector",	"Notify you when the phone detects a specific sound.",	0,
+	"SoundAlive",	"Samsung's Audio FX Manager.",	1
+);
+#
+selectbox(
+	"ensō",
+	"Please select the features you want to have in the ROM.",
+	"@feat",
+	"feat2.prop",
+
+	"Samsung Device Maintenance",	"",	2,
+		"None",	"The app will not be installed in your phone.",	0,
+		"International",	"White UX. Displayed in Settings app.",	1,
+		"China",	"Blue/C Series UX. Displayed in App Drawer.",	0,
+
+	"Samsung Camera App",	"",	2,
+		"Samsung Camera",	"No Social shortcuts.",	0,
+		"Samsung Social Camera",	"Social shortcuts included.",	1,
+
+	"Samsung Camera Stickers",	"",	2,
+		"None",	"No Stickers feature will be installed.",	0,
+		"2D Stickers",	"",	0,
+		"2D+3D Stickers",	"",	0,
+		"2D+3D Stickers+AR Emoji",	"This includes Samsung's Animoji-like feature.",	1,
+
+	"Bixby Vision App",	"",	2,
+		"None",	"The app will not be installed in your phone.",	0,
+		"Bixby Vision",	"Scan text/items/food/QR Codes.",	1,
+
+	"Samsung Music",	"",	2,
+		"None",	"The app will not be installed in your phone.",	0,
+		"International",	"Standard UX.",	1,
+		"China",	"Slight different UX, ex-Milk Music.",	0,
+
+	"Samsung Video",	"",	2,
+		"None",	"The app will not be installed in your phone.",	1,
+		"International",	"Standard UX.",	0,
+		"China",	"Slight different UX.",	0
+);
+#
+checkbox(
+	"ensō",
+	"Please select the extra Samsung apps you want to have in the ROM.",
+	"@sxtra",
+	"sxtra.prop",
+
+	"Bixby Home",	"Get a summary of the day with a simple swipe in your home screen.",	1,
+	"Live Drawing",	"Create funny GIF animations with your fingers.",	1,
+	"Samsung Calculator",	"Samsung's proprietary Calculator app.",	1,
+	"Samsung Dictionary",	"Samsung's proprietary Translate/Dictionary app.",	0,
+	"Samsung Email",	"Samsung's proprietary Email app.",	1,
+	"Samsung Game Launcher",	"Find and group your installed games easily.",	1,
+	"Samsung Game Live",	"Create live streams of your games to various streaming socials.",	0,
+	"Samsung Game Tools",	"Phone's Control Center available while you play your games.",	1,
+	"Samsung Game Tuner",	"Modify/tweak your game's settings.",	0,
+	"Samsung Health",	"Keep track of your health/training status.",	1,
+	"Samsung Link Sharing",	"Share massive files to another phone easily.",	0,
+	"Samsung Magnifier",	"Samsung's Virtual Magnifier app.",	0,
+	"Samsung Notes",	"Create cool notes with text, images and more.",	1,
+	"Samsung Smart Reminder",	"Set up smart reminders to get notified when and where you need to.",	1,
+	"Samsung Sound Assistant",	"Modify/tweak/enhance your audio's settings.",	1,
+	"Samsung Wearable",	"Manages your Samsung Gear/Watch devices.",	0,
+	"Test Apps",	"Hidden apps that shows hw infos, IMEI and more.",	0,
+	"Write on PDF",	"Samsung's proprietary PDF Viewer app.",	1
+);
+#
+checkbox(
+	"ensō",
+	"Please select the apps you want to have pre-installed in the ROM.",
+	"@apps",
+	"apps.prop",
+
+	"AdAway",	"An open source ad blocker for Android using the hosts file.",	0,
+	"BetterBatteryStats",	"Get advanced battery cycle status.",	0,
+	"DNS66",	"Alternative to AdAway, uses an alternative DNS without editing system.",	0,
+	"GBWhatsApp",	"Modded version of WhatsApp which contains extra features.",	1,
+	"Google Camera",	"Google Pixel's camera app port.",	0,
+	"Kernel Toolkit",	"Manage your kernel settings.",	0,
+	"MiXplorer",	"Alternative to stock File Manager with root support.",	1,
+	"Plus Messenger",	"Modded version of Telegram which contains extra features.",	1,
+	"Titanium Backup",	"Backup/Restore your app's data easily.",	1,
+	"YouTube Vanced",	"Modded version of YouTube which contains extra features.",	1
+);
+#
+ini_set("text_next", "Next");
+#
+selectbox(
+	"ensō",
+	"Please select the extra tweaks you want to have in the ROM.",
+	"@tweaks",
+	"tweaks.prop",
+
+	"Boot Animation",	"",	2,
+		"Samsung Logo",	"Choosing this will apply stock Samsung bootanimation.",	0,
+		"ensō Logo",	"Choosing this will apply custom ensō bootanimation.",	1,
+
+	"Call Recording",	"",	2,
+		"None",	"By choosing this, Call Recording feature will not be enabled.",	0,
+		"Yes",	"By choosing this, Call Recording feature will be enabled.",	1,
+
+	"Emoji",	"",	2,
+		"Samsung",	"Choosing this will apply stock Samsung Emoji pack.",	0,
+		"iOS",	"Choosing this will apply custom Apple Emoji pack.",	1,
+
+	"iOS Notifications Sounds",	"",	2,
+		"None",	"By choosing this, iOS Sounds will not be installed.",	0,
+		"Yes",	"By choosing this, iOS Sounds will be installed.",	1
+);
+#
+ini_set("text_next", "Install");
+#
+viewbox(
+	"ensō",
+	"Installer is now ready to configure your device with ensō!\n\n"+
+	"Press <b>Install</b> to start the ROM installation.\n"+
+	"If you want to review or change any of your preferences, press <b>Back</b>.",
+	"@install"
+);
+#
+ini_set("text_next", "Next");
+ini_set("icon_next", "@next");
+#
+setvar("retstatus",
+  install(
+	  "ensō",
+	  "Installer is flashing the ROM.\n"+
+	  "Please wait...",
+	  "@install",
+	  "Install finished!"
+  )
+);
+#
+ini_set("text_next", "Quit");
+#
+checkviewbox(
+	"ensō",
+	"Congratulations! <b>ensō</b> has been installed successfully on your device!\n\n"+
+	"You can now reboot directly to system and enjoy the ROM, or exit to do more operations in recovery.\n\n"+
+	"Please notice first boot might take time, so please have patience during it.\n\n"+
+	"<b>Enjoy <#selectbg_g>ensō</#>!</b>",
+	"@finish",
+	"Reboot to system",
+	"1",
+	"reboot_it"
+);
+#
+if getvar("reboot_it")=="1" then
+	reboot("onfinish");
+endif;

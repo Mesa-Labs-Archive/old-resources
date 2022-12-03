@@ -1,0 +1,58 @@
+
+<@center><b><#selectbg_g>ensō v1 Xtreme PowerPack ROM</#></b>
+The ultimate Samsung Experience Oreo ROM for your Galaxy phone.
+
+Coded by <b>BlackMesa</b> @DevKings Team
+
+
+<b><#selectbg_g>Terms and conditions</#></b>
+
+<*>You are NOT authorized to take, modify, upload or alter ANY file or the whole ROM without my permission.</*>
+<*>This ROM works only on Galaxy A8/A8+ 2018 (A530F/N/W & A730F). I'm not responsible for any damage that might happen if you flash on other devices.</*>
+<*>I am not responsible about any damage of any kind that this ROM may cause.</*>
+<*>Bugs can be reported in XDA or in one of the Telegram Group dedicated. Please provide detailed infos when reporting bugs (device variant, logcat and any other required information).</*>
+<*>If you like my work feel free to support me by clicking the "Thanks" button in the XDA Thread, or by donating me via my donation link in XDA.</*>
+
+
+<b><#selectbg_g>Intro</#></b>
+
+ensō is the ultimate Samsung Experience Oreo ROM for the Galaxy A8 2018 devices that you've been looking for!
+It aims at giving you the best user experience by empowering your device with a fully featured and super smooth ROM.
+The PowerPack installer offers you the choice to fully re-shape your ROM with extra features, apps and many unique aspects that you can not find elsewhere, to let you create your own customized ROM that suites your exact preference.
+With ensō, your hunt for Android modifications is over!
+
+
+<b><#selectbg_g>Features</#></b>
+
+<b>ROM Features</b>
+<*>Android 8.0.0 Oreo</*>
+<*>Based on A7 2018 A750FNXXU6AHIA firmware</*>
+<*>January security patch (01.01.19)</*>
+<*>Fast & Stable</*>
+<*>Prerooted with Magisk, Busybox'd</*>
+<*>Custom Debloat</*>
+<*>DeKnoxed</*>
+<*>RMM Removed</*>
+<*>Tweaked for best performance/battery</*>
+
+
+<b><#selectbg_g>Changelog</#></b>
+
+<b>v1</b>
+<*>First release</*>
+
+
+<b><#selectbg_g>Bugs</#></b>
+
+<*>None</*>
+
+
+<b><#selectbg_g>Credits</#></b>
+
+<*>Samsung</*>
+<*>DevKings Team (BlackMesa123, corsicanu, ananjaser1211, mohitmallick17 and Yahia Angelo)</*>
+<*>thereassaad for help with mods and support</*>
+<*>josete_1976 for his TouchWiz Home Mod</*>
+<*>Elite TeaM Crew members for support</*>
+<*>XDA Samsung Community and all the Mesa Labs users <3</*>
+</@>

@@ -1,0 +1,67 @@
+img.background=bg
+img.titlebar=titlebar
+img.navbar=navbar
+img.dialog=dialog.9
+img.dialog.titlebar=dialog_titlebar.9
+img.progress=progress_empty.9
+img.prograss.fill=progress_full.9
+img.selection=select
+img.selection.push=select_push
+
+img.button=button.9
+img.button.focus=button_focus.9
+img.button.push=button_press.9
+
+img.checkbox=cb
+img.checkbox.focus=cb_sel
+img.checkbox.push=cb_sel
+img.checkbox.on=cb_on
+img.checkbox.on.focus=cb_on_sel
+img.checkbox.on.push=cb_on_sel
+
+img.radio=radio
+img.radio.focus=radio_sel
+img.radio.push=radio_sel
+img.radio.on=radio_on
+img.radio.on.focus=radio_on_sel
+img.radio.on.push=radio_on_sel
+
+
+color.winbg           = #fafafa
+color.winbg_g         = #fafafa
+color.winfg           = #2d2d2d
+color.winfg_gray      = #666666
+color.dialogbg        = #fafafa
+color.dialogbg_g      = #fafafa
+color.dialogfg        = #2d2d2d
+color.textbg          = #fafafa
+color.textfg          = #2d2d2d
+color.textfg_gray     = #666666
+color.controlbg       = #fafafa
+color.controlbg_g     = #fafafa
+color.controlfg       = #2d2d2d
+color.selectbg        = #00aeff
+color.selectbg_g      = #00aeff
+color.selectfg        = #2d2d2d
+color.titlebg         = #2d2d2d
+color.titlebg_g       = #2d2d2d
+color.titlefg         = #fafafa
+color.dlgtitlebg      = #2d2d2d
+color.dlgtitlebg_g    = #2d2d2d
+color.dlgtitlefg      = #fafafa
+color.scrollbar       = #00aeff
+color.navbg           = #fafafa
+color.navbg_g         = #fafafa
+color.border          = #dddddd
+color.border_g        = #dddddd
+color.progressglow    = #dfdfdf
+
+
+config.roundsize             = 1
+config.button_roundsize      = 1
+config.window_roundsize      = 1
+config.transition_frame      = 5
+
+info.themename        = ensō
+info.description      = Theme for AROMA Installer
+info.author           = Daniiiik49, BlackMesa123

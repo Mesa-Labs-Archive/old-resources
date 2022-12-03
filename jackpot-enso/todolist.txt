@@ -1,0 +1,236 @@
+ensō BRAINSTORMING
+---------------------------------------------------
+------------------------THREAD-----------------------
+Thread name might be: [ROM][SE][xQxx][8.0.0][A530x/A730F]ensō v1 Xtreme PowerPack ROM
+
+Thread layout:
+-[BlackMesa][Mesa Labs][DevKings Team] presents
+
+-[ROM Logo]
+-[A possible jingle]
+
+-[Disclaimers]
+
+-[Screenshots]
+
+-[A possible intro]
+
+-[Features]
+
+- Aroma features
+- ROM features
+
+-[Supported Devices]
+
+-[Bugs]
+
+-[How to install]
+
+-[Credits]
+
+
+------post2-------
+
+
+-[Changelog]
+
+-[Downloads]
+
+-[Useful links]
+
+
+------post3-------
+
+
+-[FAQ]
+
+
+------post4-5-whatever-------
+
+
+-[RESERVED]
+
+
+---------------------------------------------------
+------------------------FEATURES-----------------------
+AROMA MUST HAVE
+
+-Cool graphic (=cool theme/splash/icons)
+-Layout must have
+	-Splash/logo
+	-Gentle welcome screen
+	-Terms n' conditions/Changelog
+	-Wipe menu
+		-No wipe, cache/art/system
+		-Factory Reset, cache/art/system (format)/data
+		-Full wipe, cache/art/system (format)/userdata (format)
+	-UI (if ensō selected)
+		-Stock, no ui mods
+		-ensō Mode, modded af
+	-DPI value
+		-Small/A8+, 280/420/560
+		-Big/A8, 320/480/640
+	-Features list
+		-ANT
+		-AOD
+		-Bixby Voice
+		-Blue light filter
+		-Car Mode/Mirror Link
+		-Dolby Atmos
+		-Dual Messenger
+		-Emergency Mode/UPSM
+		-Fonts
+		-Good Lock suite
+		-Print Services
+		-Private Mode
+		-S Bike
+		-S Pen
+		-Samsung Cloud
+		-Samsung Contacts Social shit
+		-Samsung Edge
+		-Samsung Floating Messages
+		-Samsung Sapa
+		-Samsung SmartThings/Nearby devices
+		-Samsung Spam block
+		-Samsung Themes
+		-Screensaver
+		-Smart Stay
+		-Smart Switch
+		-Smart View
+		-Sound Detector
+		-VR
+		-Wifi Direct
+		-Yuva
+	-Features pag.2
+		-Samsung Smart Manager
+			-None
+			-International
+			-China
+		-Samsung Camera App
+			-Samsung Camera v7 (Note8)/Samsung Camera v7 Social (?)
+			-Samsung Camera v8 (A7 2018)/Samsung Camera v8 Social (G611)
+		-Samsung Camera Stickers
+			-2D
+			-3D
+			-AR Emoji
+		-Bixby Vision
+			-None
+			-v1
+			-v2
+		-Samsung Music
+			-International
+			-China
+		-Samsung Video Library
+			-International
+			-China
+	-Samsung-Extra-apps
+		-Bixby Home
+		-Galaxy Apps & related
+		-Live Drawing
+		-S Health
+		-Samsung Browser
+		-Samsung Calculator
+		-Samsung Calendar
+		-Samsung Clock
+		-Samsung Dictionary
+		-Samsung Email
+		-Samsung Finder
+		-Samsung Gallery
+		-Samsung Gallery Extra features
+		-Samsung Game Launcher
+		-Samsung Game Live
+		-Samsung Game Tools
+		-Samsung Game Tuner
+		-Samsung Gear
+		-Samsung Link Sharing
+		-Samsung Magnifier
+		-Samsung My Files
+		-Samsung Notes
+		-Samsung Push Service
+		-Samsung Smart Reminder
+		-Samsung Sound Assistant
+		-Samsung Weather
+		-Test apps
+		-Write on PDF
+	-Post-Install
+		-AdAway
+		-BetterBatteryStats
+		-DNS66
+		-GBWhatsApp
+		-Google Camera
+		-Kernel Toolkit
+		-MiXplorer
+		-Plus Messenger
+		-Titanium Backup
+		-Youtube Vanced
+	-Extra tweaks
+		-Bootanimation
+			-Stock
+			-ensō
+		-Call recording
+		-Emoji
+			-Stock
+			-iOS
+		-iOS Sounds
+	-Install
+	-Gentle goodbye screen
+
+BASE MUST BE
+
+-A750FN port
+-Compatible with all S8/N8/A8 18 models with related fixes
+-Deodexed (lmao)
+-DeKnoxed (with possible knox 0 clipboard fix)
+-Debloat (move some apps to Aroma also)
+-Prerooted with Magisk and Busybox'd
+-DeRMMd (disabling it in frameworks also)
+-Optimized so Fast and stable af
+-Powered with NX/MCK
+
+ROM FEATURES MUST CONTAIN
+
+-All the Samsung native/extra features such as
+	-Samsung Stock Shit
+	-Edge features
+	-All camera features (social, stickers, portrait)
+	-S Pen features
+	-Bixby
+	-Samsung Yuva Suite (S Power, S Secure, Wifi Secure etc)
+	-Samsung S Bike
+	-Private Mode
+	-Live Drawing
+	-Samsung China apps
+	-Dolby atmos (in speaker eheh)
+	-and more I don't have now in mind*
+-Patches to the apps
+	-Samsung Theme trial removed (with RC toggle jic)
+	-DAAgent for all the apps (new patch hades-like to allow just User apps, or RC toggle)
+	-UPSM (allow all apps, RC toggle)
+	-SBrowser (disable SDP to allow Private mode)
+	-SysScope (we know why)
+	-Messages (remove IMEI Tracker)
+	-SecSettings (add toolbox shortcut+ROM Info)
+	-Setup Wizard (remode UI)
+	-wallpaper-res (100000 walpapers+infinity S8/S9/N8/N9 selectable in aroma)
+	-More probably
+ROM unique feature
+	-A complete AF Rom Control with 35000000 mods
+		-SystemUI
+		-InCallUI
+		-AOD
+		-frameworks
+		-Samsung Music
+		-and more IDHIMN*
+	-Toolbox app with a lot of utils (include in RC apk in case)
+	-OTA Updated (powered by DevKings fserver <3)
+	-DevKings wallpaper service
+	-More to add probably
+---------------------------------------------
+#00aeff white blue ensō
+#0054ff blue ensō
+#ff1200 red ensō
+#ffcc00 yellow ensō
+#2aff00 green ensō
+#4800ff purple ensō
+#ff00de pink ensō
+#ff0072 pink2 ensō
