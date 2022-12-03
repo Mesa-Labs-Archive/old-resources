@@ -1,0 +1,68 @@
+﻿#
+# On Vendor AROMA Installer Config
+#
+# AROMA Installer is property of amarullz (Ahmad Amarullah) @XDA
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+ini_set("rom_name", "On Vendor");
+ini_set("rom_version", "R1");
+ini_set("rom_author", "BlackMesa123");
+ini_set("rom_device", "Exynos 8895 family");
+ini_set("rom_date", "?");
+
+ini_set("force_colorspace", "rgba");
+
+splash(2000, "splash/8895");
+
+fontresload("0", "ttf/Roboto-Regular.ttf;", "12");
+fontresload("1", "ttf/Roboto-Regular.ttf;", "14");
+theme("oui");
+
+ini_set("text_next", "Install");
+agreebox(
+    "",
+    "Welcome to the <#selectbg_g>On Vendor</#> installer for Exynos 8895 devices.\n\n"+
+    "Press agree the terms and conditions to continue.",
+    "@mesa_on",
+    resread("text/mesa_tac.txt"),
+    "I agree to install this mod",
+    "You have to agree the terms and conditions to proceed!"
+);
+
+pleasewait("Detecting /vendor partition...");
+
+exec("/sbin/mkdir", "/tmp/aroma-data/bin");
+exec("/sbin/mkdir", "/tmp/aroma-data/scripts");
+restotmp("bin/parted", "bin/parted");
+restotmp("scripts/vendorpartitiondetect.sh", "scripts/vendorpartitiondetect.sh");
+
+if exec("/tmp/aroma-data/scripts/vendorpartitiondetect.sh") == "0" then
+    theme("oui_install");
+    ini_set("text_next", "Reboot");
+    ini_set("icon_next", "@next");
+    install(
+	"",
+	"Please wait...",
+	"@mesa_install",
+	"Install finished."
+    );
+
+    exec("/sbin/reboot", "recovery");
+else
+    alert(
+        "",
+        "Vendor partition has not been found. Please flash the vendor partition script zip first."
+    );
+endif;
+

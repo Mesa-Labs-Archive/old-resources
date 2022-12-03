@@ -1,0 +1,212 @@
+#
+# OnTheOne Installer Script
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+assert(is_substring("G950F", getprop("ro.boot.bootloader")) || is_substring("G950N", getprop("ro.boot.bootloader"))
+    || is_substring("G955F", getprop("ro.boot.bootloader")) || is_substring("G955N", getprop("ro.boot.bootloader"))
+    || is_substring("N950F", getprop("ro.boot.bootloader")) || is_substring("N950N", getprop("ro.boot.bootloader"))
+    || abort("! This device is not supported. Aborting..."););
+
+ui_print(" ");
+ui_print(" ");
+ui_print("********************************************");
+ui_print("‌Do you have the mindset to be blessed?");
+ui_print("You have to decide to be blessed");
+ui_print("You have to decide, You know what, this is a day");
+ui_print("That the Lord has made, I will rejoice");
+ui_print("And be glad that I will rejoice");
+ui_print("********************************************");
+
+package_extract_dir("mesa/rejoice/bin", "/tmp/mesa/rejoice/bin");
+package_extract_dir("mesa/rejoice/keycheck", "/tmp/mesa/rejoice/keycheck");
+package_extract_dir("mesa/rejoice/scripts", "/tmp/mesa/rejoice/scripts");
+set_metadata_recursive("/tmp/mesa", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644);
+set_metadata_recursive("/tmp/mesa/rejoice", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644);
+set_metadata_recursive("/tmp/mesa/rejoice/bin", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755);
+set_metadata_recursive("/tmp/mesa/rejoice/keycheck", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755);
+set_metadata_recursive("/tmp/mesa/rejoice/scripts", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755);
+
+run_program("/tmp/mesa/rejoice/bin/treblecheck.sh") == 0 || abort("! /vendor partition has not been found! Aborting...");
+
+if is_substring("G950", getprop("ro.boot.bootloader")) then
+    ui_print("Device detected: Galaxy S8");
+    ui_print(" ");
+endif;
+if is_substring("G955", getprop("ro.boot.bootloader")) then
+    ui_print("Device detected: Galaxy S8+");
+    ui_print(" ");
+endif;
+if is_substring("N950", getprop("ro.boot.bootloader")) then
+    ui_print("Device detected: Galaxy Note8");
+    ui_print(" ");
+endif;
+
+ui_print("Press VOLUME + button to start the install");
+ui_print("Press VOLUME - button to exit");
+ui_print("********************************************");
+
+run_program("/tmp/mesa/rejoice/keycheck/keycheck.sh") == 0 || abort("! Aborting...");
+delete_recursive("/tmp/mesa/rejoice/keycheck");
+
+ui_print("- Mounting partitions...");
+ifelse(is_mounted("/data"), unmount("/data"));
+mount("ext4", "EMMC", "/dev/block/platform/11120000.ufs/by-name/USERDATA", "/data");
+
+ui_print("- Flashing system image...");
+block_image_update("/dev/block/platform/11120000.ufs/by-name/SYSTEM", package_extract_file("system.transfer.list"), "system.new.dat.br", "system.patch.dat")
+    || abort("! Failed to flash system image. Aborting...");
+
+ui_print("- Flashing vendor image...");
+block_image_update("/dev/block/platform/11120000.ufs/by-name/VENDOR", package_extract_file("vendor.transfer.list"), "vendor.new.dat.br", "vendor.patch.dat")
+    || abort("! Failed to flash vendor image. Aborting...");
+
+ui_print("- Applying device fixes...");
+ifelse(is_mounted("/mnt/vendor"), unmount("/mnt/vendor"));
+mount("ext4", "EMMC", "/dev/block/platform/11120000.ufs/by-name/VENDOR", "/mnt/vendor");
+
+if is_substring("N950", getprop("ro.boot.bootloader")) then
+    package_extract_dir("mesa/rejoice/device/great", "/mnt/vendor");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r031_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r032_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r033_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/lib/libdualcam_optical_zoom.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib/libdualcam_refocus.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib/libdualcapture_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib/libdualpreview_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib64/libdualcam_optical_zoom.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib64/libdualcapture_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/lib64/libdualpreview_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+    set_metadata("/mnt/vendor/firmware/setfile_3m3.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+else
+    package_extract_dir("mesa/rejoice/device/dream", "/mnt/vendor");
+    set_metadata("/mnt/vendor/etc/nfc/SGP", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/nfc/SGP/sec_s3nrn82_rfreg.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_a0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_a0_ePA", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r012_a1", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r013_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r014_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_murata_r020_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r01a_a1", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r01d_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r01f_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r01i_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r02a_a1", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r02c_a1", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+    set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r02g_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+endif;
+set_metadata("/mnt/vendor/app/mcRegistry/ffffffff00000000000000000000000c.tlbin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:mobicore_file:s0");
+set_metadata("/mnt/vendor/app/mcRegistry/ffffffffd00000000000000000000014.tlbin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:mobicore_file:s0");
+set_metadata("/mnt/vendor/etc/gnss", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/gnss/gps.cer", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/gnss/gps.xml", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/mixer_gains.xml", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/nfc", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/nfc/BRI", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/nfc/BRI/sec_s3nrn82_rfreg.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/nfc/sec_s3nrn82_rfreg.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/wifi/bcmdhd_clm.blob", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/wifi/nvram.txt_r02j_b0", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/etc/SoundBoosterParam.txt", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+set_metadata("/mnt/vendor/firmware/APBargeIn_AUDIO_SLSI.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/APBiBF_AUDIO_SLSI.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/AP_AUDIO_SLSI.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/SoundBoosterParam.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/calliope_dram.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/calliope_sram.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/companion_fw_2l2_3h1.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/companion_fw_2l2_imx320.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/companion_fw_imx333_3h1.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/companion_fw_imx333_imx320.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/dsm_tune.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/fimc_is_lib.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/fimc_is_rta_2l2_3h1.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/fimc_is_rta_2l2_imx320.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/fimc_is_rta_imx333_3h1.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/fimc_is_rta_imx333_imx320.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/iva10_rt-kangchen.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/mfc_fw.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/nfc", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/nfc/BRI", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/nfc/BRI/sec_s3nrn82_firmware.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/nfc/sec_s3nrn82_firmware.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/ois_fw_dom.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/ois_fw_sec.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/score_fw_dmb0.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/score_fw_pmw0.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/setfile_2l2.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/setfile_3h1.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/setfile_imx320.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/firmware/setfile_imx333.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_firmware_file:s0");
+set_metadata("/mnt/vendor/lib/hw/camera.universal8895.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libexynoscamera.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libexynoscamera3.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libhifills_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libhifistill.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libhifistill_tuning.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libhypermotion_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libiva_android_hal.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libopenvx.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/librecordalive.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libsamsungDiamondVoice.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libscore.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/libvdis_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib/sensors.sensorhub.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/hw/camera.universal8895.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libexynoscamera.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libexynoscamera3.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libhifills_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libhifistill.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libhifistill_tuning.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libhypermotion_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libiva_android_hal.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libkeymaster_helper.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libopenvx.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libscore.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/libvdis_interface.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/lib64/sensors.sensorhub.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/openvx/xml", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/openvx/xml/_hifi_still_schedule.xml", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/mnt/vendor/overlay/framework-res__auto_generated_rro_vendor.apk", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_overlay_file:s0");
+
+run_program("/tmp/mesa/rejoice/scripts/devicepatches.sh");
+
+unmount("/mnt/vendor");
+
+ui_print("- Flashing boot image...");
+#run_program("/tmp/mesa/rejoice/scripts/flashboot.sh") == 0 || abort("! Failed to flash boot image. Aborting...");
+
+ui_print("- Flashing recovery image...");
+#run_program("/tmp/mesa/rejoice/scripts/flashrecovery.sh") == 0 || abort("! Failed to flash recovery image. Aborting...");
+
+ui_print("- Applying new splash screen...");
+run_program("/tmp/mesa/rejoice/scripts/splashscreen.sh");
+
+ui_print("- Cleaning temp folder...");
+delete_recursive("/tmp/mesa");
+
+ui_print("- Unmounting partitions...");
+unmount("/data");
+
+ui_print("********************************************");
+ui_print("Give me a new mind means give me a new perspective");
+ui_print("Give me a new perspective");
+ui_print("Give me a new way of looking at my situation");
+ui_print("Give me a new way of looking at my circumstances");
+ui_print("Get my mind ready for this year");
+ui_print("********************************************");
+ui_print(" ");
+ui_print(" ");
+

@@ -1,0 +1,26 @@
+
+<@center><#selectbg_g>On Vendor</#> R1 <b>for Exynos 8895</b>
+
+Coded by <b>BlackMesa123</b> @Mesa Labs
+
+
+<b><#selectbg_g>Terms and conditions</#></b>
+
+<*>The user is full aware of modifying its device, so the Dev Team is <#selectbg>not responsible</#> about any serious damage of any kind that might happen after the install.</*>
+<*>The re-upload without credits of the mod or any file inside it <#selectbg>is prohibited</#> without the Dev Team consent. Any unauthorized kang/copy will not recieve any official support.</*>
+<*>The user is pleased to report any incountered bug in the official XDA thread or in the Mesa Labs Discord group. If possible, please include more detailed infos on it (such as device variant, logcat and any other required info from the Dev Team).</*>
+
+
+<b><#selectbg_g>Changelog</#></b>
+
+<b>R1</b>
+<*>First release</*>
+
+
+<b><#selectbg_g>Bugs</#></b>
+
+<*>None</*>
+
+
+For more infos, please visit the <b>official XDA thread</b>.
+</@>

@@ -1,0 +1,137 @@
+#!/sbin/sh
+#
+# OnTheOne Partition Script
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Credits to @osm0sis; @Chainfire; @Zackptg5;
+OUTFD=/proc/self/fd/$2;
+ZIPFILE="$3";
+TMPDIR="/tmp/mesa";
+
+package_extract_dir() {
+  local entry outfile;
+  for entry in $(unzip -l "$ZIPFILE" 2>/dev/null | tail -n+4 | grep -v '/$' | grep -o " $1.*$" | cut -c2-); do
+    outfile="$(echo "$entry" | sed "s|${1}|${2}|")";
+    mkdir -p "$(dirname "$outfile")";
+    unzip -o "$ZIPFILE" "$entry" -p > "$outfile";
+  done;
+}
+
+set_metadata_recursive() {
+  local dir i;
+  dir="$1";
+  shift;
+  while [ "$2" ]; do
+    case $1 in
+      uid) chown -R $2 "$dir";;
+      gid) chown -R :$2 "$dir";;
+      dmode) find "$dir" -type d -exec chmod $2 {} +;;
+      fmode) find "$dir" -type f -exec chmod $2 {} +;;
+      capabilities) find "$dir" -exec twrp setcap {} $2 +;;
+      selabel)
+        for i in /system/bin/toybox /system/toolbox /system/bin/toolbox; do
+          (find "$dir" -exec LD_LIBRARY_PATH=/system/lib $i chcon -h $2 {} + || find "$dir" -exec LD_LIBRARY_PATH=/system/lib $i chcon $2 {} +) 2>/dev/null;
+        done || find "$dir" -exec chcon -h $2 '{}' + || find "$dir" -exec chcon $2 '{}' +;
+      ;;
+      *) ;;
+    esac;
+    shift 2;
+  done;
+}
+
+ui_print() {
+  while [ "$1" ]; do
+    echo -e "ui_print $1
+      ui_print" >> $OUTFD;
+    shift;
+  done;
+}
+
+volume_choose() {
+  /tmp/mesa/bin/keycheck;
+  if [ $? -eq 42 ]; then
+    EXECUTE=true;
+  elif [ $? -eq 21 ]; then
+    EXECUTE=false;
+  fi;
+}
+
+# Script start
+ui_print " ";
+ui_print "********************************************";
+ui_print "OnTheOne - partition script";
+ui_print "Coded by BlackMesa123";
+ui_print " ";
+ui_print "This script is able to create/remove the vendor";
+ui_print "custom partition needed for treble to work.";
+ui_print " ";
+ui_print "More infos at @xda-developers.com project thread.";
+ui_print "********************************************";
+
+mkdir -p "$TMPDIR";
+package_extract_dir "mesa" "$TMPDIR";
+set_metadata_recursive "$TMPDIR" uid "0" gid "0" dmode "0755" fmode "0644";
+set_metadata_recursive "$TMPDIR/bin" uid "0" gid "0" dmode "0755" fmode "0755";
+
+if $TMPDIR/bin/parted /dev/block/sda p | grep -q 'VENDOR'; then
+  VENDOR_PART_DETECT=true;
+else
+  VENDOR_PART_DETECT=false;
+fi;
+
+if [ "$VENDOR_PART_DETECT" = true ]; then
+  ui_print "/vendor partition DETECTED!";
+  ui_print " ";
+  ui_print "Press VOLUME + button to restore the old partitions";
+  ui_print "Press VOLUME - button to exit the script";
+  ui_print "********************************************";
+
+  volume_choose;
+
+  if [ "$EXECUTE" = true ]; then
+    # Credits to @corsicanu for his 8895 treble hax
+    vendor=`$TMPDIR/bin/parted /dev/block/sda p | grep VENDOR | cut -c0-2`;
+    cache=`$TMPDIR/bin/parted /dev/block/sda p | grep CACHE | cut -c0-2`;
+    $TMPDIR/bin/parted /dev/block/sda name $vendor "CACHE";
+    $TMPDIR/bin/parted /dev/block/sda name $cache "HIDDEN";
+    ui_print "Legacy partitions restored.";
+    ui_print "********************************************";
+  fi;
+
+  ui_print " ";
+else
+  ui_print "/vendor partition NOT DETECTED.";
+  ui_print " ";
+  ui_print "Press VOLUME + button to create /vendor partition";
+  ui_print "Press VOLUME - button to exit the script";
+  ui_print "********************************************";
+
+  volume_choose;
+
+  if [ "$EXECUTE" = true ]; then
+    # Credits to @corsicanu for his 8895 treble hax
+    cache=`$TMPDIR/bin/parted /dev/block/sda p | grep CACHE | cut -c0-2`;
+    hidden=`$TMPDIR/bin/parted /dev/block/sda p | grep HIDDEN | cut -c0-2`;
+    $TMPDIR/bin/parted /dev/block/sda name $cache "VENDOR";
+    $TMPDIR/bin/parted /dev/block/sda name $hidden "CACHE";
+    ui_print "/vendor partition created!";
+    ui_print "********************************************";
+  fi;
+
+  ui_print " ";
+fi;
+
+rm -r "/tmp/mesa";
+
